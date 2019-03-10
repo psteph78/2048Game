@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+    <link rel="stylesheet" type="text/css" href="gameStyle.css"/>
+    <script src="refreshPage.js" type="text/javascript"></script>
+   <h:head></h:head>
+   <h:body>
+      <h:form>
+         <f:view>
+
+             <p align="center" >
+                 <h:outputText value="2048" style="font-family: 'Ink Free'; font-weight: bold; color: darkgoldenrod; font-size: 55px"/>
+             </p>
+
+                 <p></p>
+                <p align="center">
+                <h:commandButton value="Up" actionListener="#{myManagedBean.up}" onClick="refreshPage()" styleClass="moveButton"> </h:commandButton>
+                <h:commandButton value="Down" actionListener="#{myManagedBean.down}" onClick="refreshPage()" styleClass="moveButton"> </h:commandButton>
+                <h:commandButton value="Left" actionListener="#{myManagedBean.left}" onClick="refreshPage()" styleClass="moveButton" > </h:commandButton>
+                <h:commandButton value="Right" actionListener="#{myManagedBean.right}" onClick="refreshPage()" styleClass="moveButton"> </h:commandButton>
+                </p>
+                 <p align="center">
+                     <h:commandButton value="Reset" actionListener="#{myManagedBean.reset}" onClick="refreshPage()" styleClass="moveButton"> </h:commandButton>
+                 </p>
+
+          <p align="center">
+              <h:outputText value="HighestScore: #{myManagedBean.highestScore}" style="font-family: 'Ink Free'; font-weight: bold; color: darkgoldenrod; font-size: 25px; padding: 7px"/>
+              <h:outputText value="Score: #{myManagedBean.score}" style="font-family: 'Ink Free'; font-weight: bold; color: darkgoldenrod; font-size: 20px; padding: 7px"/>
+          </p>
+
+
+             <p align="center">
+                 <h:outputText value = "GAME OVER" rendered = "#{myManagedBean.gameState == 'over'}" style="font-family: 'Ink Free'; font-weight: bold; color: darkred; font-size: 35px"/>
+             </p>
+             <p align="center">
+                 <h:outputText value = "YOU WON!" rendered = "#{myManagedBean.gameState == 'won'}" style="font-family: 'Ink Free'; font-weight: bold; color: darkred; font-size: 35px"/>
+             </p>
+
+             <h:panelGrid columns = "4" cellpadding="5" cellspacing="1"
+                          style = "width: fit-content; height: fit-content; margin: 0 auto; background: wheat; border-radius: 10px">
+                 <c:forEach var = "i" begin = "0" end = "3">
+                     <c:forEach var = "j" begin = "0" end = "3">
+                         <ui:fragment rendered="#{myManagedBean.board[i][j] == null}">
+                         <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(188,84,25,0.27)" cellpadding="10" cellspacing="1">
+                             <h:outputText value = " " />
+                         </h:panelGrid>
+                         </ui:fragment>
+                         <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 2}">
+                             <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: antiquewhite"
+                                          cellpadding="10" cellspacing="1">
+                                 <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: #292424" />
+                             </h:panelGrid>
+                         </ui:fragment>
+                         <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 4}">
+                             <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: bisque; transition: 200ms ease-in-out; transition-property : transform;
+                                transition-delay : 2s; transition-duration : 4s; -webkit-transition: ease-in-out"
+                                          cellpadding="10" cellspacing="1">
+                                 <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: #292424" />
+                             </h:panelGrid>
+                         </ui:fragment>
+                         <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 8}">
+                             <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(244,147,62,0.76)" cellpadding="10" cellspacing="1">
+                                 <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                             </h:panelGrid>
+                         </ui:fragment>
+                         <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 16}">
+                             <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(238,106,43,0.76)" cellpadding="10" cellspacing="1">
+                                 <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                             </h:panelGrid>
+                         </ui:fragment>
+                         <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 32}">
+                             <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(241,85,68,0.76) " cellpadding="10" cellspacing="1">
+                                 <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                             </h:panelGrid>
+                         </ui:fragment>
+                         <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 64}">
+                             <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(225,43,31,0.76)" cellpadding="10" cellspacing="1">
+                                 <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                             </h:panelGrid>
+                         </ui:fragment>
+                         <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 128}">
+                             <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(224,196,70,0.76)" cellpadding="10" cellspacing="1">
+                                 <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                             </h:panelGrid>
+                         </ui:fragment>
+                             <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 256}">
+                                 <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(224,183,66,0.76)" cellpadding="10" cellspacing="1">
+                                     <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                                 </h:panelGrid>
+                             </ui:fragment>
+                             <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 512}">
+                                 <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(224,163,29,0.76)" cellpadding="10" cellspacing="1">
+                                     <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                                 </h:panelGrid>
+                             </ui:fragment>
+                             <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 1024}">
+                                 <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: rgba(220,168,17,0.76)" cellpadding="10" cellspacing="1">
+                                     <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                                 </h:panelGrid>
+                             </ui:fragment>
+                             <ui:fragment rendered="#{myManagedBean.board[i][j].getValue() == 2048}">
+                                 <h:panelGrid style="text-align: center; width: 80px; height: 80px; margin: 0 auto; top:0; bottom:0;
+                                left:0; right:0; border-radius:10px; background: darkgoldenrod" cellpadding="10" cellspacing="1">
+                                     <h:outputText value = "#{myManagedBean.board[i][j].getValue()}" style="font-weight: bold; font-size: 25px; color: white" />
+                                 </h:panelGrid>
+                             </ui:fragment>
+                     </c:forEach>
+                 </c:forEach>
+             </h:panelGrid>
+
+         </f:view>
+      </h:form>
+   </h:body>
+</html>
